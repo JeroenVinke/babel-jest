@@ -36,15 +36,15 @@ const createTransformer = options => {
       }
 
       paths.push(directory);
-      const configFilePath = path.join(directory, BABELRC_FILENAME);
-      if (fs.existsSync(configFilePath)) {
-        cache[directory] = fs.readFileSync(configFilePath, 'utf8');
-        break;
-      }
       const configJsFilePath = path.join(directory, BABELRC_JS_FILENAME);
       if (fs.existsSync(configJsFilePath)) {
         // $FlowFixMe
         cache[directory] = JSON.stringify(require(configJsFilePath));
+        break;
+      }
+      const configFilePath = path.join(directory, BABELRC_FILENAME);
+      if (fs.existsSync(configFilePath)) {
+        cache[directory] = fs.readFileSync(configFilePath, 'utf8');
         break;
       }
       const packageJsonFilePath = path.join(directory, PACKAGE_JSON);
